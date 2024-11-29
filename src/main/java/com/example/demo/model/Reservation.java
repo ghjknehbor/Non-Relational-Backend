@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class Reservation {
 
     @Id
-    private int reservation_id;
+    private String id;
     private String notification;
     private boolean reservation_status;
 

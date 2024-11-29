@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class Location {
 
     @Id
-    private int location_id;
+    private String id;
     private String location_name; 
 
 }

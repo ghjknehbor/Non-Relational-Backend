@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.Villa_Owner;
 import com.example.demo.repository.Villa_OwnerRepository;
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/villa_owner")
 public class Villa_OwnerController {
     @Autowired
     private Villa_OwnerRepository villa_OwnerRepository;

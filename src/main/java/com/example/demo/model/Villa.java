@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
@@ -18,16 +19,19 @@ import lombok.NoArgsConstructor;
 public class Villa {
 
     @Id
-    private String villa_id;
+    private String id;
     private String villa_name;
     private String villa_desc;
     private String address;
     private int review_rating;
     private String review_comment;
 
+    
     @CreatedDate
     private LocalDateTime createdOn;
 
+    @DBRef
+    private Location location;
     @LastModifiedDate
     private LocalDateTime updatedOn;
 

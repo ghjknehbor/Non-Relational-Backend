@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class Villa_Owner {
     
     @Id
-    private int villa_owner_id;
+    private String id;
     private String email;
     private String password;
     private Villa villa_owned;

@@ -24,7 +24,7 @@ public class UsersController {
     @Autowired
     private UsersRepository usersRepository;
 
-    @PostMapping("/create_user")
+    @PostMapping("/create_user") // this is basically register lol
     public Users createUser(@RequestBody Users users) {
         return usersRepository.save(users);
     }

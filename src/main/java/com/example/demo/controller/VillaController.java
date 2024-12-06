@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.model.Location;
 import com.example.demo.model.Villa;
-import com.example.demo.repository.LocationRepository;
 import com.example.demo.repository.VillaRepository;
 
 @CrossOrigin(origins = "*")
@@ -25,12 +23,9 @@ import com.example.demo.repository.VillaRepository;
 public class VillaController {
     @Autowired
     private VillaRepository villaRepository;
-    @Autowired
-    private LocationRepository locationRepository;
     @PostMapping("/create_villa")
 
     public Villa createVilla(@RequestBody Villa villa) {
-        Location location = locationRepository.save(villa.getLocation());
         return villaRepository.save(villa);
     }
 
@@ -43,12 +38,11 @@ public class VillaController {
             Villa updatedVilla = existingVilla.get();
             updatedVilla.setVilla_name(villa.getVilla_name());
             updatedVilla.setVilla_desc(villa.getVilla_desc());
-            updatedVilla.setLocation(villa.getLocation());
             updatedVilla.setAddress(villa.getAddress());
-            
-            // Save updated location
-            Location updatedLocation = locationRepository.save(updatedVilla.getLocation());
-            updatedVilla.setLocation(updatedLocation);
+            updatedVilla.setLocationName(villa.getLocationName());
+            updatedVilla.setAvailableDate(villa.getAvailableDate());
+            updatedVilla.setOccupancy(villa.getOccupancy());
+            updatedVilla.setPrice(villa.getPrice());
             
             return villaRepository.save(updatedVilla);
         }
@@ -72,6 +66,11 @@ public class VillaController {
     @GetMapping("/show_villa")
     public List<Villa> getAllVillas() {
         return villaRepository.findAll();
+    }
+
+    @PostMapping("/view_villa/{villaOwnerid}")
+    public List<Villa> ViewOwnerVilla(@PathVariable String villaOwnerid) {
+        return villaRepository.findByvillaOwnerid(villaOwnerid);
     }
         // UsersController should be mostly done here
 }

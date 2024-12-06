@@ -3,9 +3,7 @@ com\example\demo\model\Reservation.class
 com\example\demo\repository\UsersRepository.class
 com\example\demo\model\Customer.class
 com\example\demo\model\Villa.class
-com\example\demo\model\Location.class
 com\example\demo\Security\JwtUtil.class
-com\example\demo\repository\LocationRepository.class
 com\example\demo\controller\CustomerController.class
 com\example\demo\repository\CustomerRepository.class
 com\example\demo\Security\JwtRequestFilter.class

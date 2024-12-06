@@ -21,7 +21,6 @@ public class Villa_Owner {
     private String id;
     private String email;
     private String password;
-    private Villa villa_owned;
     private int phone_num;
 
     @CreatedDate

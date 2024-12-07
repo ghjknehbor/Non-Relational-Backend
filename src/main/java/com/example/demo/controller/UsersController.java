@@ -33,7 +33,7 @@ public class UsersController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @PostMapping("/create_user") // this is basically register lol
+    @PostMapping("/register") // this is basically register lol
     public Users createUser(@RequestBody Users users) {
         users.setPassword(passwordEncoder.encode(users.getPassword()));
         return usersRepository.save(users);

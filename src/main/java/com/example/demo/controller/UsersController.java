@@ -1,12 +1,10 @@
 package com.example.demo.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,8 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.Security.JwtUtil;
 import com.example.demo.model.Users;
 import com.example.demo.repository.UsersRepository;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -24,8 +27,15 @@ public class UsersController {
     @Autowired
     private UsersRepository usersRepository;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @PostMapping("/create_user") // this is basically register lol
     public Users createUser(@RequestBody Users users) {
+        users.setPassword(passwordEncoder.encode(users.getPassword()));
         return usersRepository.save(users);
     }
 
@@ -36,22 +46,32 @@ public class UsersController {
 
     
     @PostMapping("/auth/login")
-    public ResponseEntity<?> loginUser(@RequestBody Map<String, String> credentials) {
-        String email = credentials.get("email");
-        String password = credentials.get("password");
-
-        // Search for a user with the provided email and password
-        Users user = usersRepository.findByEmailAndPassword(email, password);
-
-        if (user != null) {
-            // Return userId if login is successful
-            Map<String, String> response = new HashMap<>();
-            response.put("userId", user.getId());
-            return ResponseEntity.ok(response);
-        } else {
-            // Return an error response if login fails
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                                 .body("Invalid email or password");
+    public ResponseEntity<?> login(@RequestBody Users loginRequest) throws Exception {
+        // Find user by email
+        Users user = usersRepository.findByEmail(loginRequest.getEmail());
+        if (user == null || !passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+            throw new Exception("Invalid email or password");
         }
+        TokenResponse tokenResponse = new TokenResponse();
+        tokenResponse.setToken(jwtUtil.generateToken(user.getEmail()));
+
+        // Generate JWT token directly after verifying password
+        return ResponseEntity.ok(tokenResponse);
     }
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+class respond {
+    String status = "success";
+    List<?> data;
 }
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+class TokenResponse {
+    String status = "success";
+    String token;
+}
+}
+

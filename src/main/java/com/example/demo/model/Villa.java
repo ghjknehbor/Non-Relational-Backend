@@ -29,6 +29,7 @@ public class Villa {
     private int review_rating;
     private String review_comment;
     private String villaOwnerid;
+    private String[] imagePath;
     
     @CreatedDate
     private LocalDateTime createdOn;

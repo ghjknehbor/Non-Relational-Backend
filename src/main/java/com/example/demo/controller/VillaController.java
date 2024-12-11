@@ -43,6 +43,7 @@ public class VillaController {
             updatedVilla.setAvailableDate(villa.getAvailableDate());
             updatedVilla.setOccupancy(villa.getOccupancy());
             updatedVilla.setPrice(villa.getPrice());
+            updatedVilla.setImagePath(villa.getImagePath());
             
             return villaRepository.save(updatedVilla);
         }

@@ -1,6 +1,5 @@
 package com.example.demo.model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -24,8 +23,8 @@ public class Villa {
     private String villa_desc;
     private String address;
     private String price;
-    private int occupancy;
-    private LocalDate availableDate;
+    private String occupancy;
+    private String availableDate;
     private int review_rating;
     private String review_comment;
     private String villaOwnerid;

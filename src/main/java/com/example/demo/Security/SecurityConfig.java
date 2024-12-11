@@ -23,7 +23,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/users/auth/login", "/api/users/register", "/api/villa_owner/register", "/api/villa_owner/auth/login","/api/villa/show_villa").permitAll()
+                .requestMatchers("/api/users/auth/login", "/api/users/register", "/api/villa_owner/register", "/api/villa_owner/auth/login","/api/villa/show_villa","/api/villa/search").permitAll()
                 // .requestMatchers("/api/categories/", "/api/users/current").authenticated()
                 .anyRequest().authenticated() // Require authentication for all other endpoints
             )

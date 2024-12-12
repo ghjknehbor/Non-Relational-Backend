@@ -3,12 +3,14 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -58,6 +60,20 @@ public class UsersController {
         // Generate JWT token directly after verifying password
         return ResponseEntity.ok(tokenResponse);
     }
+    @PostMapping("/auth/getEmail")
+    public ResponseEntity<?> getEmailFromToken(@RequestHeader("Authorization") String token) {
+    // Remove "Bearer " from the token string
+    String jwtToken = token.startsWith("Bearer ") ? token.substring(7) : token;
+    
+    String email;
+    try {
+        email = jwtUtil.extractEmail(jwtToken);
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+    }
+
+    return ResponseEntity.ok(new respond("success", List.of(email)));
+}
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

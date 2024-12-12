@@ -60,7 +60,7 @@ public class UsersController {
         // Generate JWT token directly after verifying password
         return ResponseEntity.ok(tokenResponse);
     }
-    @PostMapping("/auth/getEmail")
+    @PostMapping("/auth/getusersEmail")
     public ResponseEntity<?> getEmailFromToken(@RequestHeader("Authorization") String token) {
     // Remove "Bearer " from the token string
     String jwtToken = token.startsWith("Bearer ") ? token.substring(7) : token;

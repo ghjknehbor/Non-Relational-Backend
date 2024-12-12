@@ -22,9 +22,9 @@ public class JwtUtil {
     }
 
     // Generate a token
-    public String generateToken(String email) {
+    public String generateToken(String id) {
         return Jwts.builder()
-                .setSubject(email)
+                .setSubject(id)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 hours
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
@@ -32,13 +32,13 @@ public class JwtUtil {
     }
 
     // Extract email (or any other claim)
-    public String extractEmail(String token) {
+    public String extractuserId(String token) {
         return extractAllClaims(token).getSubject();
     }
 
     // Validate token
-    public boolean validateToken(String token, String email) {
-        return (extractEmail(token).equals(email) && !isTokenExpired(token));
+    public boolean validateToken(String token, String id) {
+        return (extractuserId(token).equals(id) && !isTokenExpired(token));
     }
 
     // Check if token is expired

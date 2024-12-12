@@ -26,14 +26,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         final String authorizationHeader = request.getHeader("Authorization");
 
-        String email = null;
+        String id = null;
         String jwt = null;
 
         // Extract JWT from the Authorization header
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
             try {
-                email = jwtUtil.extractEmail(jwt); // Extract email from JWT token
+                id = jwtUtil.extractuserId(jwt); // Extract email from JWT token
             }
             catch (JwtException e) {
                 System.out.println("Invalid JWT Token");
@@ -41,11 +41,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         }
 
         // Validate token and set authentication context if the email is extracted
-        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        if (id != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             // Validate the token with the extracted email
-            if (jwtUtil.validateToken(jwt, email)) {
+            if (jwtUtil.validateToken(jwt, id)) {
                 // Create authentication token with no specific authorities
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, null, Collections.emptyList());
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(id, null, Collections.emptyList());
 
                 // Set additional details and the authentication context
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

@@ -50,24 +50,24 @@ public class Villa_OwnerController {
                 throw new Exception("Invalid email or password");
             }
             TokenResponse tokenResponse = new TokenResponse();
-            tokenResponse.setToken(jwtUtil.generateToken(owner.getEmail()));
+            tokenResponse.setToken(jwtUtil.generateToken(owner.getId()));
 
             return ResponseEntity.ok(tokenResponse);
         }
     
-    @PostMapping("/auth/getVillaOwnerEmail")
-    public ResponseEntity<?> getEmailFromToken(@RequestHeader("Authorization") String token) {
+    @PostMapping("/auth/getVillaOwnerId")
+    public ResponseEntity<?> getownerIdFromToken(@RequestHeader("Authorization") String token) {
     // Remove "Bearer " from the token string
     String jwtToken = token.startsWith("Bearer ") ? token.substring(7) : token;
     
-    String email;
+    String userId;
     try {
-        email = jwtUtil.extractEmail(jwtToken);
+        userId = jwtUtil.extractuserId(jwtToken);
     } catch (Exception e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
     }
 
-    return ResponseEntity.ok(new respond("success", List.of(email)));
+    return ResponseEntity.ok(new respond("success", List.of(userId)));
     }
     
     @GetMapping

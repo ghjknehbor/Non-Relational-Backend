@@ -55,24 +55,24 @@ public class UsersController {
             throw new Exception("Invalid email or password");
         }
         TokenResponse tokenResponse = new TokenResponse();
-        tokenResponse.setToken(jwtUtil.generateToken(user.getEmail()));
+        tokenResponse.setToken(jwtUtil.generateToken(user.getId()));
 
         // Generate JWT token directly after verifying password
         return ResponseEntity.ok(tokenResponse);
     }
-    @PostMapping("/auth/getusersEmail")
-    public ResponseEntity<?> getEmailFromToken(@RequestHeader("Authorization") String token) {
+    @PostMapping("/auth/getusersId")
+    public ResponseEntity<?> getuserIdFromToken(@RequestHeader("Authorization") String token) {
     // Remove "Bearer " from the token string
     String jwtToken = token.startsWith("Bearer ") ? token.substring(7) : token;
     
-    String email;
+    String userId;
     try {
-        email = jwtUtil.extractEmail(jwtToken);
+        userId = jwtUtil.extractuserId(jwtToken);
     } catch (Exception e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
     }
 
-    return ResponseEntity.ok(new respond("success", List.of(email)));
+    return ResponseEntity.ok(new respond("success", List.of(userId)));
 }
 @Data
 @AllArgsConstructor

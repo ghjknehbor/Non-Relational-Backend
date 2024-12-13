@@ -75,9 +75,13 @@ public class VillaController {
         return villaRepository.findAll();
     }
 
-    @PostMapping("/view_villa/{villaOwnerid}")
-    public List<Villa> ViewOwnerVilla(@PathVariable String villaOwnerid) {
-        return villaRepository.findByvillaOwnerid(villaOwnerid);
+    @PostMapping("/view_owner_villa")
+    public List<Villa> ViewOwnerVilla(@RequestBody OwnerViewVilla ownerViewVilla) {
+        return villaRepository.findByvillaOwnerid(ownerViewVilla.getVillaOwnerid());
+    }
+    @PostMapping("/view_user_villa")
+    public Optional<Villa> ViewOwnerReservation(@RequestBody UserViewVilla userViewVilla) {
+        return villaRepository.findById(userViewVilla.getVillaId());
     }
 
     @PostMapping("/search")
@@ -105,5 +109,17 @@ public static class SearchClass {
     private String entered_locationName;
     private String entered_availableDate;
     private String entered_occupancy;
+}
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public static class UserViewVilla {
+    private String villaId;
+}
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public static class OwnerViewVilla {
+    private String villaOwnerid;
 }
 }

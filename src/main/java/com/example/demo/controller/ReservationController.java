@@ -6,7 +6,6 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,15 +55,14 @@ public class ReservationController {
         return reservationRepository.save(reservation);
     }
 
-    @PostMapping("/view_user_reservation/{userId}")
-    public List<Reservation> ViewUserReservation(@PathVariable String userId) {
-        return reservationRepository.findByUserId(userId);
+    @PostMapping("/view_user_reservation")
+    public List<Reservation> ViewUserReservation(@RequestBody userviewreservation UserRequest) {
+        return reservationRepository.findByUserId(UserRequest.getUserId());
     }
-    @PostMapping("/view_owner_reservation/{villaId}")
-    public List<Reservation> ViewOwnerReservation(@PathVariable String villaId) {
-        return reservationRepository.findByVillaId(villaId);
+    @PostMapping("/view_owner_reservation")
+    public List<Reservation> ViewOwnerReservation(@RequestBody ownerviewreservation ownerRequest) {
+        return reservationRepository.findByVillaId(ownerRequest.getVillaId());
     }
-
     @GetMapping
     public List<Reservation> getAllReservations() {
         return reservationRepository.findAll();
@@ -76,4 +74,17 @@ public static class VerifyReview {
     private String verification_code;
     private int user_rate;
 }
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public static class userviewreservation {
+    private String userId;
+}
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public static class ownerviewreservation {
+    private String villaId;
+}
+
 }

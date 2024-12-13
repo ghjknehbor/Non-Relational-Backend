@@ -11,4 +11,5 @@ import com.example.demo.model.Reservation;
 public interface ReservationRepository extends MongoRepository<Reservation, Object> {
     List<Reservation> findByUserId(String userId);
     List<Reservation> findByVillaId(String villaId);
+    Reservation findByVerificationCode(String verificationCode);
 }

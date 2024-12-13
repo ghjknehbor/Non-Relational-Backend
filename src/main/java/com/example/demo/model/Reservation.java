@@ -19,7 +19,8 @@ public class Reservation {
 
     @Id
     private String id;
-    private String notification;
+    private int userRate; // rate from 1 to 5
+    private String verificationCode; // enter this code to rate
     private boolean reservation_status;
     private String villaId;
     private String userId;

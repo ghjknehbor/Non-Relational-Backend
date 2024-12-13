@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,6 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.Reservation;
 import com.example.demo.repository.ReservationRepository;
 import com.example.demo.repository.VillaRepository;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 @RestController
 @RequestMapping("/api/reservation")
 @CrossOrigin(origins = "*")
@@ -25,6 +30,29 @@ public class ReservationController {
 
     @PostMapping("/create_reservation")
     public Reservation createReservation(@RequestBody Reservation reservation) {
+        String verificationCode = generateVerificationCode();
+        reservation.setVerificationCode(verificationCode);
+        return reservationRepository.save(reservation);
+    }
+    private String generateVerificationCode() {
+    int length = 10; 
+    Random random = new Random();
+    StringBuilder code = new StringBuilder();
+
+    for (int i = 0; i < length; i++) {
+        int digit = random.nextInt(10); 
+        code.append(digit);
+    }
+
+    return code.toString();
+}   
+    @PostMapping("/verifyReview")
+    public Reservation createReview(@RequestBody VerifyReview verifyReview) {
+        Reservation reservation = reservationRepository.findByVerificationCode(verifyReview.getVerification_code());
+        if (reservation == null) {
+            throw new RuntimeException("Reservation not found with the provided verification code, scammer!!.");
+        }
+        reservation.setUserRate(verifyReview.getUser_rate());
         return reservationRepository.save(reservation);
     }
 
@@ -41,5 +69,11 @@ public class ReservationController {
     public List<Reservation> getAllReservations() {
         return reservationRepository.findAll();
     }
-        // UsersController should be mostly done here
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public static class VerifyReview {
+    private String verification_code;
+    private int user_rate;
+}
 }

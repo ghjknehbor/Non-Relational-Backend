@@ -24,6 +24,7 @@ public class Reservation {
     private boolean reservation_status;
     private String villaId;
     private String userId;
+    private String message;
     @CreatedDate
     private LocalDateTime createdOn;
 

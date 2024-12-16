@@ -46,7 +46,10 @@ public class UsersController {
         return usersRepository.findAll();
     }
 
-    
+    @PostMapping("/getuserinfo")
+    public Users ViewUserInfo(@RequestBody Userinfo userinfo) {
+        return usersRepository.findById(userinfo.getId());
+    }
     @PostMapping("/auth/login")
     public ResponseEntity<?> login(@RequestBody Users loginRequest) throws Exception {
         // Find user by email
@@ -88,6 +91,12 @@ class respond {
 class TokenResponse {
     String status = "success";
     String token;
+}
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public static class Userinfo {
+    private String id;
 }
 }
 

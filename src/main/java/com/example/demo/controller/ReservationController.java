@@ -63,7 +63,7 @@ public class ReservationController {
     public List<Reservation> ViewOwnerReservation(@RequestBody ownerviewreservation ownerRequest) {
         return reservationRepository.findByVillaId(ownerRequest.getVillaId());
     }
-    @GetMapping
+    @GetMapping("/view_reservations")
     public List<Reservation> getAllReservations() {
         return reservationRepository.findAll();
     }

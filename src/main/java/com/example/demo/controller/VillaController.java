@@ -46,7 +46,6 @@ public class VillaController {
             updatedVilla.setVilla_desc(villa.getVilla_desc());
             updatedVilla.setAddress(villa.getAddress());
             updatedVilla.setLocationName(villa.getLocationName());
-            updatedVilla.setAvailableDate(villa.getAvailableDate());
             updatedVilla.setOccupancy(villa.getOccupancy());
             updatedVilla.setPrice(villa.getPrice());
             updatedVilla.setImagePath(villa.getImagePath());
@@ -87,9 +86,8 @@ public class VillaController {
     @PostMapping("/search")
     public ResponseEntity<List<Villa>> searchVilla(@RequestBody SearchClass searchInput) {
     // Use the repository to filter villas by location, date, and occupancy
-    List<Villa> filteredVillas = villaRepository.findByLocationNameAndAvailableDateAndOccupancy(
+    List<Villa> filteredVillas = villaRepository.findByLocationNameAndOccupancy(
         searchInput.getEntered_locationName(),
-        searchInput.getEntered_availableDate(),
         searchInput.getEntered_occupancy()
     );
 

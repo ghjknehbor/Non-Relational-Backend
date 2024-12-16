@@ -24,7 +24,6 @@ public class Villa {
     private String address;
     private String price;
     private String occupancy;
-    private String availableDate;
     private int review_rating;
     private String review_comment;
     private String villaOwnerid;

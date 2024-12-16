@@ -47,8 +47,8 @@ public class UsersController {
     }
 
     @PostMapping("/getuserinfo")
-    public Users ViewUserInfo(@RequestBody Userinfo userinfo) {
-        return usersRepository.findById(userinfo.getId());
+    public Users ViewUserInfo(@RequestBody Users id) {
+        return usersRepository.findById(id.getId());
     }
     @PostMapping("/auth/login")
     public ResponseEntity<?> login(@RequestBody Users loginRequest) throws Exception {

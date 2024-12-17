@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Reservation;
+import com.example.demo.model.Villa;
 import com.example.demo.repository.ReservationRepository;
 import com.example.demo.repository.VillaRepository;
 
@@ -52,6 +54,10 @@ public class ReservationController {
             throw new RuntimeException("Reservation not found with the provided verification code, scammer!!.");
         }
         reservation.setUserRate(verifyReview.getUser_rate());
+        Optional<Villa> villa = villaRepository.findById(reservation.getVillaId());
+        Villa villasave = villa.get();
+        villasave.setReview_rating(verifyReview.getUser_rate());
+        villaRepository.save(villasave);
         return reservationRepository.save(reservation);
     }
 

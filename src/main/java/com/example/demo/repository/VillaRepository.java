@@ -13,5 +13,5 @@ import com.example.demo.model.Villa;
 public interface VillaRepository extends MongoRepository<Villa, Object> {
     List<Villa> findByvillaOwnerid(String villaOwnerid);
     Optional<Villa> findById(String id);
-    List<Villa> findByLocationNameAndOccupancy(String LocationName,String occupancy);
+    List<Villa> findByLocationNameAndOccupancy(String LocationName,int occupancy);
 }

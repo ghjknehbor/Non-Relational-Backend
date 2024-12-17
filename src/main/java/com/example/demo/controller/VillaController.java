@@ -105,8 +105,7 @@ public class VillaController {
 @NoArgsConstructor
 public static class SearchClass {
     private String entered_locationName;
-    private String entered_availableDate;
-    private String entered_occupancy;
+    private int entered_occupancy;
 }
 @Data
 @AllArgsConstructor

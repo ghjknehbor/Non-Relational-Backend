@@ -37,6 +37,8 @@ Booking management (reserve, cancel, and view bookings).
 User profile management (update personal information, change passwords).
 
 Input validation and error handling are implemented to ensure data integrity and provide meaningful feedback to clients.
+
+
 5. NoSQL database Integration
 The application uses MongoDB, a popular document-oriented NoSQL database, as its primary data store.
 
